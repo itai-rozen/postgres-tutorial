@@ -10,4 +10,5 @@ router.get('/:id', getSingleTodo)
 
 router.delete(`/:id`, deleteTodo)
 
+router.put('/:id', updateTodo)
 module.exports = router

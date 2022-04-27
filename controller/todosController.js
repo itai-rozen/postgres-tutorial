@@ -25,7 +25,7 @@ todoController.getSingleTodo = async (req,res) => {
   try {
     const { id } = req.params
     const todo = await pool.query(`SELECT * FROM todos WHERE todo_id = ${id}`)
-    res.send(todo.rows)
+    res.send(todo.rows[0])
   }catch(err){
     res.send(err.message)
   }
@@ -42,7 +42,14 @@ todoController.deleteTodo = async (req,res) => {
 }
 
 todoController.updateTodo = async (req,res) => {
-
+  try {
+    const { id } = req.params
+    const { description } = req.body
+    await pool.query('UPDATE todos SET description = $1 WHERE todo_id = $2', [description,id])
+    res.send("updated successfully")
+  } catch(err){
+    res.send(err.message)
+  }
 }
 
 module.exports = todoController
