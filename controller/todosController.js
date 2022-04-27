@@ -5,8 +5,8 @@ todoController.addTodo = async (req,res) => {
   try {
     const { description } = req.body
     const newTodo = await pool.query(`INSERT INTO todos (description) VALUES('${description}');`)
-    // const newTodo = await pool.query(`INSERT INTO todos (description) VALUES($1)`, [description])
-    res.send(newTodo)
+    // const newTodo = await pool.query(`INSERT INTO todos (description) VALUES($1) RETURNIN *`, [description])
+    res.send(newTodo.rows[0])
   } catch(err){
     res.send(err.message)
   }
